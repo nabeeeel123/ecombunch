@@ -1,0 +1,6 @@
+# WireGuard private material - never commit
+*.conf
+!vpn/**/README.md
+vpn/**/clients/
+server.env
+server.json
