@@ -53,44 +53,35 @@ traffic uses their internet while it's on.
 
 ## Option 2: nobody in the US (free, but needs a card for ID check, datacenter IP)
 
-Oracle Cloud's free tier. About 30 minutes. A credit or debit card is required
-for identity verification and is not charged. Prepaid and virtual cards are
-rejected, and Oracle rejects a lot of signups with no reason given.
+Oracle Cloud's free tier. About 20 minutes, most of it Oracle's signup. A
+credit or debit card is required for identity verification and is not charged.
+Prepaid and virtual cards are rejected, and Oracle rejects some signups with
+no reason given.
 
 1. https://www.oracle.com/cloud/free/  Start for free. Home region:
-   **US East (Ashburn)**. Cannot be changed later.
-2. After login: Compute, Instances, **Create instance**.
-   - Image: click Change image, pick **Ubuntu**, 24.04.
-   - Shape: click Change shape, **Ampere**, `VM.Standard.A1.Flex`, 2 OCPU,
-     12 GB. If it errors with "Out of capacity", change to
-     **AMD**, `VM.Standard.E2.1.Micro`.
-   - Under SSH keys: **Save private key**. Keep that file.
-   - Create. Wait until it says Running, copy the **Public IP**.
-3. Open the port: Networking, Virtual cloud networks, click the VCN, Security
-   Lists, Default Security List, **Add Ingress Rules**:
-   Source CIDR `0.0.0.0/0`, IP Protocol **UDP**, Destination Port Range
-   `51820`. Add.
-4. From your PC (PowerShell or Terminal), replace the key path and IP:
-
-```
-ssh -i C:\path\to\ssh-key.key ubuntu@PUBLIC_IP
-```
-
-5. On the server, paste:
+   **US East (Ashburn)**. It cannot be changed later. Finish the phone and
+   card checks and log in to the console.
+2. Top right of the console, click the **Cloud Shell** icon (looks like `>_`).
+   A terminal opens at the bottom. Wait for the prompt.
+3. Paste this and press Enter:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/nabeeeel123/ecombunch/claude/charming-fermi-7ptowx/vpn/linux/wg-server.sh -o wg-server.sh
-sudo bash wg-server.sh install
-sudo wg-server add phone
+bash <(curl -fsSL https://raw.githubusercontent.com/nabeeeel123/ecombunch/claude/charming-fermi-7ptowx/vpn/oracle/create-vpn.sh)
 ```
 
-6. Phone: install **WireGuard** from the App Store or Play Store, tap **+**,
+   It builds the network, launches the free VM, installs the VPN, and after
+   a few minutes prints a QR code. If Oracle's ARM shape is out of capacity
+   it falls back to the smaller x86 free shape by itself. If it fails, just
+   run the same line again.
+4. Phone: install **WireGuard** from the App Store or Play Store, tap **+**,
    **Scan from QR code**, scan the terminal. Turn it on.
-7. PC: `sudo wg-server add pc`, copy the printed config into a file called
-   `pc.conf`, install WireGuard from https://www.wireguard.com/install/,
-   **Import tunnel(s) from file**.
+5. PC: install WireGuard from https://www.wireguard.com/install/, copy the
+   printed `pc.conf` block into a file called `pc.conf`, **Import tunnel(s)
+   from file**.
 
 Open https://ifconfig.me. It should show the Oracle IP.
+
+Later, in Cloud Shell: `~/wg add tablet`, `~/wg list`, `~/wg remove tablet`.
 
 ---
 

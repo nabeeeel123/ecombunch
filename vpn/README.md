@@ -26,7 +26,7 @@ Read the honest part first, then pick a path.
 | Path | Cost | IP type | Needs | Folder |
 |---|---|---|---|---|
 | **A. Tailscale exit node** on a US friend's or relative's PC, Raspberry Pi, or spare Android phone | $0 | Real home IP | One person in the US to run a script once. No router changes. | `tailscale/` |
-| **B. WireGuard on Oracle Cloud Always Free** (Ashburn, Phoenix or San Jose region) | $0 forever | Datacenter, flagged as VPN | A credit or debit card for identity check, never charged. Signups get rejected often. | `linux/` |
+| **B. WireGuard on Oracle Cloud Always Free** (Ashburn, Phoenix or San Jose region) | $0 forever | Datacenter, flagged as VPN | A credit or debit card for identity check, never charged. Signups get rejected often. | `oracle/` (one paste in Cloud Shell) or `linux/` (manual) |
 | **C. WireGuard on a Windows PC** in a US home | $0 | Real home IP | A US person, plus one port forwarded on their router. Use A instead unless you specifically want WireGuard. | `windows/` |
 
 Path A is the best free option. Path B is the fallback when you know nobody
@@ -75,6 +75,12 @@ can.
 ---
 
 ## B. WireGuard on Oracle Cloud Always Free (free, datacenter IP)
+
+**Automatic:** after signing up, open Cloud Shell (the `>_` icon in the
+console) and paste the one line from `QUICKSTART.md`. `oracle/create-vpn.sh`
+creates the network, launches the free VM, installs WireGuard and prints the
+phone QR. Manual steps below if you'd rather click through it.
+
 
 1. Sign up at https://www.oracle.com/cloud/free/ and pick a **US home
    region** (US East Ashburn, US West Phoenix, or US West San Jose). The
