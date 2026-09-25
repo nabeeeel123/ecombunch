@@ -2,20 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Nabvisions | YouTube &amp; TikTok Content Agency</title>
-  <meta name="description" content="Nabvisions builds and runs YouTube and TikTok channels for brands and creators: strategy, scripting, voiceover, editing, thumbnails, uploads and growth reporting." />
+  <meta name="description" content="Nabvisions builds and runs YouTube and TikTok channels: strategy, scripting, voiceover, editing, thumbnails, uploads and growth reporting. Original content, you own the channel." />
+  <meta name="theme-color" content="#07070d" />
   <meta property="og:title" content="Nabvisions | YouTube & TikTok Content Agency" />
   <meta property="og:description" content="Done-for-you YouTube and TikTok channels. Original content, consistent uploads, transparent reporting." />
   <meta property="og:url" content="https://nabvisions.com" />
   <meta property="og:type" content="website" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%237c5cff'/><path d='M20 44V20l24 24V20' stroke='white' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+  <link rel="canonical" href="https://nabvisions.com/" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c5cff'/><stop offset='1' stop-color='%2322d3ee'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(%23g)'/><path d='M20 44V20l24 24V20' stroke='white' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="config.js"></script>
+  <script type="module" src="assets/app.js"></script>
 </head>
 <body>
+
+  <!-- Preloader -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <span class="logo-mark big">N</span>
+      <span class="loader-word">Nabvisions</span>
+      <span class="loader-count">000</span>
+    </div>
+  </div>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- 3D stage (fixed behind the hero and the process section) -->
+  <canvas id="gl" aria-hidden="true"></canvas>
 
   <header class="nav" id="top">
     <div class="container nav-inner">
@@ -28,10 +48,10 @@
         <a href="#process">Process</a>
         <a href="#plans">Plans</a>
         <a href="#faq">FAQ</a>
-        <a href="#contact" class="btn btn-small">Book a call</a>
+        <a href="#contact" class="btn btn-small" data-book>Book a call</a>
       </nav>
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span>
       </button>
     </div>
   </header>
@@ -39,102 +59,55 @@
   <main>
     <!-- HERO -->
     <section class="hero">
-      <div class="glow glow-1"></div>
-      <div class="glow glow-2"></div>
       <div class="container hero-inner">
-        <div class="hero-copy reveal">
-          <span class="eyebrow"><span class="dot"></span> YouTube &amp; TikTok content agency</span>
-          <h1>We build and run channels that <span class="grad">keep publishing</span>, without you on camera.</h1>
-          <p class="lead">Nabvisions handles the whole pipeline: niche research, scripting, voiceover, editing, thumbnails, uploads and optimisation. You get a channel that posts consistently, and you own every part of it.</p>
-          <div class="hero-cta">
-            <a href="#contact" class="btn">Book a free strategy call</a>
-            <a href="#work" class="btn btn-ghost">See what we produce →</a>
-          </div>
-          <ul class="hero-points">
-            <li>100% original content</li>
-            <li>You own the channel</li>
-            <li>Weekly reporting</li>
-          </ul>
-        </div>
-
-        <div class="hero-visual reveal" aria-hidden="true">
-          <div class="phone">
-            <div class="phone-screen">
-              <div class="short-card">
-                <div class="short-top"><span class="pill pill-tt">Short-form</span><span class="muted">0:42</span></div>
-                <div class="short-bars"><span></span><span></span><span></span></div>
-                <div class="short-caption">Hook → value → loop</div>
-              </div>
-            </div>
-          </div>
-          <div class="video-card">
-            <div class="thumb"><div class="play"></div></div>
-            <div class="video-meta">
-              <span class="pill pill-yt">Long-form</span>
-              <div class="line w80"></div>
-              <div class="line w50"></div>
-            </div>
-          </div>
-          <div class="pipeline-card">
-            <div class="pipe-row"><span class="check">✓</span> Script approved</div>
-            <div class="pipe-row"><span class="check">✓</span> Voiceover done</div>
-            <div class="pipe-row"><span class="spin"></span> Editing</div>
-            <div class="pipe-row dim"><span class="todo"></span> Scheduled: Fri 6pm</div>
+        <div class="hero-copy">
+          <span class="eyebrow reveal"><span class="dot"></span> YouTube &amp; TikTok content agency</span>
+          <h1 data-split>We build channels that <span class="grad">never stop</span> publishing.</h1>
+          <p class="lead reveal">Strategy, scripts, voiceover, editing, thumbnails and uploads, all handled by Nabvisions. Your channel posts consistently, without you on camera, and you own every part of it.</p>
+          <div class="hero-cta reveal">
+            <a href="#contact" class="btn" data-magnetic data-book>Book a free strategy call</a>
+            <a href="#process" class="btn btn-ghost" data-magnetic>See how it works</a>
           </div>
         </div>
+        <div class="hero-stage" aria-hidden="true"></div>
+      </div>
+      <div class="hero-foot container reveal">
+        <ul class="hero-points">
+          <li>100% original content</li>
+          <li>You own the channel</li>
+          <li>Weekly reporting</li>
+        </ul>
+        <span class="scroll-hint">Scroll <i></i></span>
       </div>
     </section>
 
-    <!-- PLATFORMS STRIP -->
-    <section class="strip">
-      <div class="container strip-inner">
-        <span>YouTube long-form</span><span class="sep">•</span>
-        <span>YouTube Shorts</span><span class="sep">•</span>
-        <span>TikTok</span><span class="sep">•</span>
-        <span>Instagram Reels</span><span class="sep">•</span>
-        <span>Faceless &amp; creator-led</span>
+    <!-- MARQUEE -->
+    <section class="marquee" aria-label="Platforms">
+      <div class="marquee-track">
+        <div class="marquee-row">
+          <span>YouTube</span><b>✦</b><span class="o">Shorts</span><b>✦</b><span>TikTok</span><b>✦</b><span class="o">Reels</span><b>✦</b><span>Faceless</span><b>✦</b><span class="o">Long-form</span><b>✦</b>
+        </div>
+        <div class="marquee-row" aria-hidden="true">
+          <span>YouTube</span><b>✦</b><span class="o">Shorts</span><b>✦</b><span>TikTok</span><b>✦</b><span class="o">Reels</span><b>✦</b><span>Faceless</span><b>✦</b><span class="o">Long-form</span><b>✦</b>
+        </div>
       </div>
     </section>
 
     <!-- SERVICES -->
     <section class="section" id="services">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Services</span>
-          <h2>Everything a channel needs, under one roof.</h2>
-          <p>Pick the full done-for-you package, or plug us into the parts of your pipeline that slow you down.</p>
+        <div class="section-head">
+          <span class="eyebrow reveal">Services</span>
+          <h2 data-split>Everything a channel needs, under one roof.</h2>
+          <p class="reveal">Take the full done-for-you package, or plug us into the parts of your pipeline that slow you down.</p>
         </div>
         <div class="grid grid-3">
-          <article class="card reveal">
-            <div class="icon">▶</div>
-            <h3>YouTube channel management</h3>
-            <p>Long-form videos made end to end: topic research, scripts, voiceover, editing, thumbnails, titles and uploads.</p>
-          </article>
-          <article class="card reveal">
-            <div class="icon">♪</div>
-            <h3>TikTok &amp; Shorts production</h3>
-            <p>Daily short-form content built for retention: strong hooks, captions, trending formats and loop endings.</p>
-          </article>
-          <article class="card reveal">
-            <div class="icon">✦</div>
-            <h3>Channel setup &amp; branding</h3>
-            <p>Niche selection, competitor analysis, channel name, logo, banner, intro and a content calendar for the first 90 days.</p>
-          </article>
-          <article class="card reveal">
-            <div class="icon">✎</div>
-            <h3>Scripting &amp; voiceover</h3>
-            <p>Researched, fact-checked scripts written for watch time, with human or licensed AI voiceover that fits your channel.</p>
-          </article>
-          <article class="card reveal">
-            <div class="icon">◧</div>
-            <h3>Editing &amp; thumbnails</h3>
-            <p>Motion graphics, B-roll, sound design and click-worthy thumbnails, A/B tested where the platform allows it.</p>
-          </article>
-          <article class="card reveal">
-            <div class="icon">↗</div>
-            <h3>SEO, analytics &amp; growth</h3>
-            <p>Keyword-driven titles and descriptions, upload timing, retention analysis and a weekly report on what to do next.</p>
-          </article>
+          <article class="card tilt reveal"><span class="card-num">01</span><div class="icon">▶</div><h3>YouTube channel management</h3><p>Long-form videos made end to end: topic research, scripts, voiceover, editing, thumbnails, titles and uploads.</p></article>
+          <article class="card tilt reveal"><span class="card-num">02</span><div class="icon">♪</div><h3>TikTok &amp; Shorts production</h3><p>Daily short-form content built for retention: strong hooks, captions, trending formats and loop endings.</p></article>
+          <article class="card tilt reveal"><span class="card-num">03</span><div class="icon">✦</div><h3>Channel setup &amp; branding</h3><p>Niche selection, competitor analysis, channel name, logo, banner, intro and a 90-day content calendar.</p></article>
+          <article class="card tilt reveal"><span class="card-num">04</span><div class="icon">✎</div><h3>Scripting &amp; voiceover</h3><p>Researched, fact-checked scripts written for watch time, with human or licensed AI voiceover that fits your channel.</p></article>
+          <article class="card tilt reveal"><span class="card-num">05</span><div class="icon">◧</div><h3>Editing &amp; thumbnails</h3><p>Motion graphics, B-roll, sound design and click-worthy thumbnails, A/B tested where the platform allows it.</p></article>
+          <article class="card tilt reveal"><span class="card-num">06</span><div class="icon">↗</div><h3>SEO, analytics &amp; growth</h3><p>Keyword-driven titles and descriptions, upload timing, retention analysis and a weekly report on what to do next.</p></article>
         </div>
       </div>
     </section>
@@ -142,89 +115,59 @@
     <!-- WORK -->
     <section class="section section-alt" id="work">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">What we produce</span>
-          <h2>Formats and niches we work in.</h2>
-          <p>Every channel gets its own style guide. Here are the formats we build most often.</p>
+        <div class="section-head">
+          <span class="eyebrow reveal">What we produce</span>
+          <h2 data-split>Formats and niches we work in.</h2>
+          <p class="reveal">Every channel gets its own style guide. These are the formats we build most often.</p>
         </div>
-
-        <!--
-          PORTFOLIO: when you have real client results, add them to the
-          `portfolio` array in script.js (channel name, link, real numbers).
-          Only publish numbers you can prove, with client permission.
-        -->
-        <div class="grid grid-3" id="workGrid">
-          <article class="work reveal">
-            <div class="work-thumb t1"><span class="pill pill-yt">Long-form</span></div>
-            <h3>Documentary &amp; explainer</h3>
-            <p>History, science, finance and business stories told with archive footage, maps and motion graphics.</p>
-            <ul class="tags"><li>Research</li><li>Voiceover</li><li>Motion graphics</li></ul>
-          </article>
-          <article class="work reveal">
-            <div class="work-thumb t2"><span class="pill pill-tt">Short-form</span></div>
-            <h3>Facts, tips &amp; listicles</h3>
-            <p>Fast, caption-driven shorts for TikTok, Shorts and Reels, produced in batches to keep daily uploads going.</p>
-            <ul class="tags"><li>Hooks</li><li>Captions</li><li>Batch production</li></ul>
-          </article>
-          <article class="work reveal">
-            <div class="work-thumb t3"><span class="pill pill-yt">Long-form</span></div>
-            <h3>Top-10 &amp; compilation</h3>
-            <p>Ranked and themed videos with original scripts and commentary, built to add real value, not reuploads.</p>
-            <ul class="tags"><li>Scripting</li><li>Editing</li><li>Thumbnails</li></ul>
-          </article>
-          <article class="work reveal">
-            <div class="work-thumb t4"><span class="pill pill-tt">Short-form</span></div>
-            <h3>Brand &amp; product content</h3>
-            <p>Short videos for e-commerce and local brands: product demos, UGC-style ads and TikTok Shop content.</p>
-            <ul class="tags"><li>UGC style</li><li>Ads</li><li>TikTok Shop</li></ul>
-          </article>
-          <article class="work reveal">
-            <div class="work-thumb t5"><span class="pill pill-yt">Clips</span></div>
-            <h3>Podcast &amp; creator clipping</h3>
-            <p>Turning long podcasts and streams into dozens of vertical clips with captions and punchy edits.</p>
-            <ul class="tags"><li>Clipping</li><li>Captions</li><li>Repurposing</li></ul>
-          </article>
-          <article class="work reveal">
-            <div class="work-thumb t6"><span class="pill pill-yt">Long-form</span></div>
-            <h3>Educational &amp; how-to</h3>
-            <p>Tutorials and deep-dives with screen recordings, diagrams and clear structure that keeps viewers watching.</p>
-            <ul class="tags"><li>Tutorials</li><li>Diagrams</li><li>Retention</li></ul>
-          </article>
+        <div class="grid grid-3">
+          <article class="work tilt reveal"><div class="work-thumb t1"><span class="pill">Long-form</span><span class="work-play"></span></div><h3>Documentary &amp; explainer</h3><p>History, science, finance and business stories told with archive footage, maps and motion graphics.</p><ul class="tags"><li>Research</li><li>Voiceover</li><li>Motion graphics</li></ul></article>
+          <article class="work tilt reveal"><div class="work-thumb t2"><span class="pill">Short-form</span><span class="work-play"></span></div><h3>Facts, tips &amp; listicles</h3><p>Fast, caption-driven shorts for TikTok, Shorts and Reels, produced in batches to keep daily uploads going.</p><ul class="tags"><li>Hooks</li><li>Captions</li><li>Batch production</li></ul></article>
+          <article class="work tilt reveal"><div class="work-thumb t3"><span class="pill">Long-form</span><span class="work-play"></span></div><h3>Top-10 &amp; compilation</h3><p>Ranked and themed videos with original scripts and commentary, built to add real value, not reuploads.</p><ul class="tags"><li>Scripting</li><li>Editing</li><li>Thumbnails</li></ul></article>
+          <article class="work tilt reveal"><div class="work-thumb t4"><span class="pill">Short-form</span><span class="work-play"></span></div><h3>Brand &amp; product content</h3><p>Short videos for e-commerce and local brands: product demos, UGC-style ads and TikTok Shop content.</p><ul class="tags"><li>UGC style</li><li>Ads</li><li>TikTok Shop</li></ul></article>
+          <article class="work tilt reveal"><div class="work-thumb t5"><span class="pill">Clips</span><span class="work-play"></span></div><h3>Podcast &amp; creator clipping</h3><p>Turning long podcasts and streams into dozens of vertical clips with captions and punchy edits.</p><ul class="tags"><li>Clipping</li><li>Captions</li><li>Repurposing</li></ul></article>
+          <article class="work tilt reveal"><div class="work-thumb t6"><span class="pill">Long-form</span><span class="work-play"></span></div><h3>Educational &amp; how-to</h3><p>Tutorials and deep-dives with screen recordings, diagrams and clear structure that keeps viewers watching.</p><ul class="tags"><li>Tutorials</li><li>Diagrams</li><li>Retention</li></ul></article>
         </div>
+        <!-- Real client results appear here once added to config.js -->
         <div id="caseStudies"></div>
       </div>
     </section>
 
-    <!-- PROCESS -->
-    <section class="section" id="process">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Process</span>
-          <h2>From idea to a channel that runs itself.</h2>
+    <!-- PROCESS (pinned 3D scroll scene) -->
+    <section class="pipeline" id="process">
+      <div class="pipe-sticky">
+        <div class="container pipe-inner">
+          <div class="pipe-copy">
+            <span class="eyebrow">Process</span>
+            <h2>One video. Five stages. <span class="grad">Every week.</span></h2>
+            <ol class="pipe-steps">
+              <li class="active"><span class="num">01</span><div><h3>Script</h3><p>Researched, fact-checked scripts with a hook in the first five seconds and retention beats throughout.</p></div></li>
+              <li><span class="num">02</span><div><h3>Voiceover</h3><p>Clean, natural narration: human or licensed AI voice, noise-cleaned and levelled.</p></div></li>
+              <li><span class="num">03</span><div><h3>Edit</h3><p>B-roll, motion graphics, captions, colour and sound design, cut for watch time.</p></div></li>
+              <li><span class="num">04</span><div><h3>Thumbnail</h3><p>Bold, readable thumbnails, tested against each other to find the one that gets clicked.</p></div></li>
+              <li><span class="num">05</span><div><h3>Publish</h3><p>SEO titles, tags and chapters, scheduled uploads, plus Shorts cut for TikTok and Reels.</p></div></li>
+            </ol>
+            <p class="pipe-desc" aria-hidden="true"></p>
+            <div class="pipe-bar"><span></span></div>
+          </div>
+          <div class="pipe-stage" aria-hidden="true"></div>
         </div>
-        <ol class="steps">
-          <li class="step reveal"><span class="num">01</span><h3>Strategy call</h3><p>We learn your goals, audience and budget, then research niches, competitors and what's working right now.</p></li>
-          <li class="step reveal"><span class="num">02</span><h3>Channel setup</h3><p>Branding, channel settings, style guide and a 90-day content plan. The channel is created in your name.</p></li>
-          <li class="step reveal"><span class="num">03</span><h3>Production pipeline</h3><p>Scripts, voiceover, editing and thumbnails run on a fixed schedule. You approve as much or as little as you want.</p></li>
-          <li class="step reveal"><span class="num">04</span><h3>Publish &amp; optimise</h3><p>We upload, write SEO titles and descriptions, schedule posts and test thumbnails and hooks.</p></li>
-          <li class="step reveal"><span class="num">05</span><h3>Report &amp; scale</h3><p>A weekly report shows views, retention and what we're changing. We double down on what works.</p></li>
-        </ol>
       </div>
     </section>
 
     <!-- STANDARDS -->
     <section class="section section-alt">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">How we work</span>
-          <h2>Built to last, not to get banned.</h2>
-          <p>Lots of "automation" channels get demonetised for reused or mass-produced content. We build the opposite.</p>
+        <div class="section-head">
+          <span class="eyebrow reveal">How we work</span>
+          <h2 data-split>Built to last, not to get banned.</h2>
+          <p class="reveal">Lots of "automation" channels get demonetised for reused or mass-produced content. We build the opposite.</p>
         </div>
         <div class="grid grid-4">
-          <div class="standard reveal"><h3>Original content only</h3><p>Every video is scripted and edited to add value. No reuploads, no stolen clips, no low-effort templates.</p></div>
-          <div class="standard reveal"><h3>You own everything</h3><p>The channel, logins, files and revenue are yours. If we part ways, you keep all of it.</p></div>
-          <div class="standard reveal"><h3>No fake growth</h3><p>No bots, bought views or engagement pods. Only real audiences that monetise and stay.</p></div>
-          <div class="standard reveal"><h3>Honest reporting</h3><p>Real numbers every week, good or bad. We never promise overnight results or guaranteed income.</p></div>
+          <div class="standard reveal"><span class="std-icon">◎</span><h3>Original content only</h3><p>Every video is scripted and edited to add value. No reuploads, no stolen clips, no low-effort templates.</p></div>
+          <div class="standard reveal"><span class="std-icon">⌂</span><h3>You own everything</h3><p>The channel, logins, files and revenue are yours. If we part ways, you keep all of it.</p></div>
+          <div class="standard reveal"><span class="std-icon">✕</span><h3>No fake growth</h3><p>No bots, bought views or engagement pods. Only real audiences that monetise and stay.</p></div>
+          <div class="standard reveal"><span class="std-icon">≡</span><h3>Honest reporting</h3><p>Real numbers every week, good or bad. We never promise overnight results or guaranteed income.</p></div>
         </div>
       </div>
     </section>
@@ -232,13 +175,13 @@
     <!-- PLANS -->
     <section class="section" id="plans">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Plans</span>
-          <h2>Choose how much you want us to handle.</h2>
-          <p>Every channel is different, so pricing is quoted after a short strategy call.</p>
+        <div class="section-head">
+          <span class="eyebrow reveal">Plans</span>
+          <h2 data-split>Choose how much you want us to handle.</h2>
+          <p class="reveal">Every channel is different, so pricing is quoted after a short strategy call.</p>
         </div>
         <div class="grid grid-3 plans">
-          <div class="plan reveal">
+          <div class="plan tilt reveal">
             <h3>Starter</h3>
             <p class="plan-sub">Launch a channel the right way</p>
             <ul>
@@ -249,7 +192,7 @@
             </ul>
             <a href="#contact" class="btn btn-ghost btn-block">Get a quote</a>
           </div>
-          <div class="plan plan-featured reveal">
+          <div class="plan plan-featured tilt reveal">
             <span class="badge">Most popular</span>
             <h3>Growth</h3>
             <p class="plan-sub">Consistent uploads on two platforms</p>
@@ -262,7 +205,7 @@
             </ul>
             <a href="#contact" class="btn btn-block">Get a quote</a>
           </div>
-          <div class="plan reveal">
+          <div class="plan tilt reveal">
             <h3>Full service</h3>
             <p class="plan-sub">Multiple channels, fully managed</p>
             <ul>
@@ -280,15 +223,15 @@
     <!-- FAQ -->
     <section class="section section-alt" id="faq">
       <div class="container narrow">
-        <div class="section-head reveal">
-          <span class="eyebrow">FAQ</span>
-          <h2>Questions we get a lot.</h2>
+        <div class="section-head">
+          <span class="eyebrow reveal">FAQ</span>
+          <h2 data-split>Questions we get a lot.</h2>
         </div>
         <div class="faq">
           <details class="reveal"><summary>Do I need to show my face or record anything?</summary><p>No. Most channels we run are faceless, using voiceover, stock and licensed footage, animation and motion graphics. If you want to be on camera, we can build around your recordings too.</p></details>
           <details class="reveal"><summary>Who owns the channel?</summary><p>You do. The channel is created under your account and you keep full ownership of the channel, files and all revenue.</p></details>
           <details class="reveal"><summary>Is this allowed by YouTube and TikTok?</summary><p>Yes, as long as the content is original and adds value, and that's the only kind we make. Channels that reupload other people's videos or mass-produce low-effort content are the ones that get demonetised. We follow YouTube's monetisation and inauthentic-content policies and TikTok's community guidelines.</p></details>
-          <details class="reveal"><summary>How fast will I see results?</summary><p>Most channels need 3–6 months of consistent uploads to find traction. Anyone who guarantees views or income is not being honest with you, so we don't. We do guarantee consistent, quality output and transparent reporting.</p></details>
+          <details class="reveal"><summary>How fast will I see results?</summary><p>Most channels need 3–6 months of consistent uploads to find traction. Anyone who guarantees views or income isn't being honest with you, so we don't. What we do guarantee is consistent, quality output and transparent reporting.</p></details>
           <details class="reveal"><summary>Can I approve videos before they go live?</summary><p>Yes. You can approve topics, scripts and final edits, or let us run it and just review the weekly report. It's up to you.</p></details>
           <details class="reveal"><summary>Do you work with existing channels?</summary><p>Yes. We audit your current channel, find what's holding it back and take over the parts of production you want off your plate.</p></details>
         </div>
@@ -301,18 +244,12 @@
         <div class="contact reveal">
           <div class="contact-copy">
             <span class="eyebrow">Contact</span>
-            <h2>Let's build your channel.</h2>
+            <h2 data-split>Let's build your channel.</h2>
             <p>Tell us a bit about your goals and we'll reply within 24 hours to book a free 20-minute strategy call.</p>
-            <ul class="contact-list">
-              <li><span>Email</span><a href="mailto:hello@nabvisions.com">hello@nabvisions.com</a></li>
-              <li><span>Website</span><a href="https://nabvisions.com">nabvisions.com</a></li>
+            <ul class="contact-list" id="contactList">
+              <li><span>Email</span><a data-email href="mailto:hello@nabvisions.com">hello@nabvisions.com</a></li>
             </ul>
           </div>
-          <!--
-            The form opens the visitor's email app by default (no setup needed).
-            To receive submissions directly, create a free form at formspree.io
-            and paste its endpoint into FORM_ENDPOINT in script.js.
-          -->
           <form class="form" id="contactForm" novalidate>
             <div class="row">
               <label>Name<input type="text" name="name" required autocomplete="name" /></label>
@@ -328,7 +265,7 @@
               </select>
             </label>
             <label>Tell us about your project<textarea name="message" rows="4" required></textarea></label>
-            <button type="submit" class="btn btn-block">Send message</button>
+            <button type="submit" class="btn btn-block" data-magnetic>Send message</button>
             <p class="form-status" id="formStatus" role="status"></p>
           </form>
         </div>
@@ -337,13 +274,21 @@
   </main>
 
   <footer class="footer">
-    <div class="container footer-inner">
-      <a href="#top" class="logo"><span class="logo-mark">N</span><span>Nabvisions</span></a>
-      <p>YouTube &amp; TikTok content agency.</p>
-      <p class="muted">© <span id="year">2026</span> Nabvisions. All rights reserved.</p>
+    <div class="container">
+      <div class="footer-top">
+        <p class="footer-cta">Have a channel idea?<br /><a href="#contact" data-book class="grad">Let's talk →</a></p>
+        <div class="footer-links">
+          <a href="#services">Services</a><a href="#work">Work</a><a href="#process">Process</a><a href="#plans">Plans</a><a href="#faq">FAQ</a>
+          <span id="socials"></span>
+        </div>
+      </div>
+      <div class="footer-word" aria-hidden="true">NABVISIONS</div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Nabvisions. All rights reserved.</span>
+        <a data-email href="mailto:hello@nabvisions.com">hello@nabvisions.com</a>
+      </div>
     </div>
   </footer>
 
-  <script src="script.js"></script>
 </body>
 </html>

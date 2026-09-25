@@ -1,0 +1,13 @@
+{
+  "name": "nabvisions-website",
+  "private": true,
+  "scripts": {
+    "build": "esbuild src/main.js --bundle --minify --format=esm --target=es2020 --outfile=assets/app.js",
+    "watch": "esbuild src/main.js --bundle --format=esm --target=es2020 --outfile=assets/app.js --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "lenis": "^1.3.26",
+    "three": "^0.186.1"
+  }
+}
